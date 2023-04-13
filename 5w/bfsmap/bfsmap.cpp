@@ -5,7 +5,13 @@
 using namespace std;
 
 const int N = 5;
-int map[N][N] = { 0 };
+int map[N][N] = {
+    {0, 0, 0, 0, 0},
+    {1, 1, 0, 1, 0},
+    {0, 0, 0, 0, 0},
+    {0, 1, 1, 1, 1},
+    {0, 0, 0, 0, 0}
+};
 bool visited[N][N] = { false };
 
 struct Node {
@@ -39,7 +45,14 @@ void print_map(int sx, int sy, int ex, int ey, vector<pair<int, int>> path) {
                     set_color(7);
                 }
                 else {
-                    cout << 0 << " ";
+                    if (map[i][j] == 0) {
+                        cout << 0 << " ";
+                    }
+                    else {
+                        set_color(12);
+                        cout << 1 << " ";
+                        set_color(7);
+                    }
                 }
             }
         }
@@ -66,7 +79,7 @@ int bfs(int sx, int sy, int ex, int ey) {
         for (int i = 0; i < 4; i++) {
             int nx = cur.x + dx[i];
             int ny = cur.y + dy[i];
-            if (nx >= 0 && nx < N && ny >= 0 && ny < N && !visited[nx][ny]) {
+            if (nx >= 0 && nx < N && ny >= 0 && ny < N && !visited[nx][ny] && map[nx][ny] == 0) {
                 vector<pair<int, int>> new_path(cur.path);
                 new_path.push_back({ nx, ny });
                 q.push({ nx, ny, cur.step + 1,new_path });
